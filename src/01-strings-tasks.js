@@ -35,7 +35,7 @@ function concatenateStrings(value1, value2) {
  *   ''      => 0
  */
 function getStringLength(value) {
- return value.length;
+  return value.length;
 }
 
 /**
@@ -66,7 +66,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
- return value.split(",")[1].slice(1);
+  return value.split(',')[1].split('!')[0].trim();
 }
 
 
@@ -81,7 +81,7 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
- return value.split("")[0];
+  return value.split('')[0];
 }
 
 /**
@@ -96,7 +96,7 @@ function getFirstChar(value) {
  *   '\tHello, World! ' => 'Hello, World!'
  */
 function removeLeadingAndTrailingWhitespaces(value) {
-  return value.match(/[\S]/g)?.join("");
+  return value.trim();
 }
 
 /**
@@ -127,7 +127,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-  return str.replace(value, "");
+  return str.replace(value, '');
 }
 
 /**
@@ -176,7 +176,7 @@ function convertToUpperCase(str) {
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-  return str.split(";");
+  return str.split(';');
 }
 
 /**
@@ -203,16 +203,9 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-  const verticalLine = "─";
-  const topLeftRectangle = "┌";
-  const topRightRectangle = "┐";
-  const verticalLine = "│";
-  const emptyString = " ";
-  const bottomLeftRectangle = "└";
-  const bottomRightRectangle = "┘";
-  const top = topLeftRectangle + verticalLine.repeat(width - 2) + `${topRightRectangle}\n`;
-  const medium = verticalLine + emptyString.repeat(width - 2) + `${verticalLine}\n`;
-  const down = bottomLeftRectangle + verticalLine.repeat(width - 2) + `${bottomRightRectangle}\n`;
+  const top = `┌${('─').repeat(width - 2)}┐\n`;
+  const medium = `│${(' ').repeat(width - 2)}│\n`;
+  const down = `└${('─').repeat(width - 2)}┘\n`;
   return top + medium.repeat(height - 2) + down;
 }
 
@@ -234,13 +227,13 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    const input = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    const output = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
-    const index = (substr) => input.indexOf(substr);
-    return str
-      .split("")
-      .map((substr) => (index(substr) > -1 ? output[index(substr)] : substr))
-      .join("");
+  const input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+  return str.split('').map((substr) => {
+    if (input.indexOf(substr) > -1) {
+      return output[input.indexOf(substr)];
+    } return substr;
+  }).join('');
 }
 
 /**
@@ -257,7 +250,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-  const isTypeString = typeof value === "string";
+  const isTypeString = typeof value === 'string';
   const isInstanceString = value instanceof String;
   return isTypeString || isInstanceString;
 }
@@ -286,17 +279,19 @@ function isString(value) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
+
 function getCardId(value) {
-  const one = ["A♣", "2♣", "3♣", "4♣", "5♣", "6♣", "7♣", "8♣", "9♣", "10♣", "J♣", "Q♣", "K♣"];
-    const two = ["A♦", "2♦", "3♦", "4♦", "5♦", "6♦", "7♦", "8♦", "9♦", "10♦", "J♦", "Q♦", "K♦"];
-    const three = ["A♥", "2♥", "3♥", "4♥", "5♥", "6♥", "7♥", "8♥", "9♥", "10♥", "J♥", "Q♥", "K♥"];
-    const four = ["A♠", "2♠", "3♠", "4♠", "5♠", "6♠", "7♠", "8♠", "9♠", "10♠", "J♠", "Q♠", "K♠"];
-    const arr = [one, two, three, four];
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i].indexOf(value) !== -1) {
-        return arr[i].indexOf(value);
-      }
+  const arrayTypesCards = ['♣', '♦', '♥', '♠'];
+  const arrayCardValue = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+  const arrayCards = [];
+  for (let type = 0; type < arrayTypesCards.length; type++) {
+    for (let val = 0; val < arrayCardValue.length; val++) {
+      const card = `${arrayCardValue[val]}${arrayTypesCards[type]}`;
+      arrayCards.push(card);
     }
+  }
+
+  return arrayCards.indexOf(value);
 }
 
 
