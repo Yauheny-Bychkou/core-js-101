@@ -284,8 +284,8 @@ function getCardId(value) {
   const arrayTypesCards = ['♣', '♦', '♥', '♠'];
   const arrayCardValue = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
   const arrayCards = [];
-  for (let type = 0; type < arrayTypesCards.length; type++) {
-    for (let val = 0; val < arrayCardValue.length; val++) {
+  for (let type = 0; type < arrayTypesCards.length; type += 1) {
+    for (let val = 0; val < arrayCardValue.length; val += 1) {
       const card = `${arrayCardValue[val]}${arrayTypesCards[type]}`;
       arrayCards.push(card);
     }
